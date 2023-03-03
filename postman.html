@@ -61,6 +61,19 @@
             //localStorage.setItem(obj.email,JSON.stringify(obj));
             //showUserOnScreen(obj)
          }
+         window.addEventListener("DOMContentLoaded",()=>{
+            axios.get("https://crudcrud.com/api/3eb137497a464d8c885f13f94eb7529d/appointmentData")
+            .then((response)=>{
+                console.log(response)
+                for(var i=0;i<response.data.length;i++)
+                {
+                   showUserOnScreen(response.data[i])
+                }
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+         })
 
          function showUserOnScreen(obj)
          {
