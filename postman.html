@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>JS For Beginners</title>
+   
+  </head>
+  <body>
+    <header>
+      <h1>JS For Beginners</h1>
+    </header>
+
+    <section class="container">
+      <form onsubmit="saveToLocalstorage(event)"  id="my-form">
+        <h1>Add User</h1>
+        <div class="msg"></div>
+        <div>
+          <label for="name">Name:</label>
+          <input type="text" id="name">
+        </div>
+        <div>
+          <label for="email">Email:</label>
+          <input type="text" id="email">
+        </div>
+        <button class="btn" type="submit" >submit</button>
+      </form>
+
+       <!--<ul id="users"></ul>
+      <ul class="items">
+        <li class="item">Item 1</li>
+        <li class="item">Item 2</li>
+        <li class="item">Item 3</li>
+      </ul> -->
+    </section>
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js"></script>
+    <script type="text/javascript">
+        function saveToLocalstorage(event)
+        {
+            event.preventDefault();
+            const name=event.target.name.value;
+            const email=event.target.email.value;
+            //display_name.innerHtml=name;
+           // display_email.innerHtml=email;
+            localStorage.setItem('name', name);
+           localStorage.setItem('email',email);
+           const obj={
+              name,
+              email
+             }
+             axios.post("https://crudcrud.com/api/3eb137497a464d8c885f13f94eb7529d/appointmentData",obj)
+             .then((response)=>{
+                showUserOnScreen(response.data)
+                console.log(response);
+             })
+             .catch((err)=>{
+                console.log(err);
+             })
+            //localStorage.setItem(obj.email,JSON.stringify(obj));
+            //showUserOnScreen(obj)
+         }
+
+         function showUserOnScreen(obj)
+         {
+          const parentelem = document.getElementById('listOfItems')
+          const childele=document.createElement('li')
+          childele.textContent = obj.name + '-' + obj.email;
+          parentelem.append(childele)
+          const del = document.createElement('input');
+          del.type = "button";
+          del.value = "Remove";
+          del.onclick = () => {
+            localStorage.removeItem(obj.email)
+            parentelem.removeChild(childele)
+
+            const editt = document.createElement('input');
+          editt.type = "button";
+          editt.value = "Remove";
+          editt.onclick = () => {
+            localStorage.removeItem(obj.email)
+            parentelem.removeChild(childele)
+            document.getElementById('nameInputTage').value=obj.name
+            document.getElementById('emailInputTage').value=obj.email
+
+          }
+          childele.append(del)
+          childele.append(editt)
+          parentelem.append(childele)
+
+         }
+        }
+    </script>
+  </body>
+</html>
